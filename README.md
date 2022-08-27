@@ -16,6 +16,9 @@ Setting up your provider information:
 
 ```csharp
 ProviderInfo provider = new ProviderInfo("System.Data.SqlClient", "Data Source=.\SQLEXPRESS;Initial Catalog=tempdb;User ID=sa;Password=adm")
+// Defaut parameters: 
+// - identifier  = @
+// - commandType = CommandType.StoredProcedure
 ```
 
 Creating a data access object:
@@ -131,6 +134,7 @@ This library will stay Release Candidate 1 due by the following reasons:
     * `AddOutputParameter` are not tested
     * `IDBTransaction` are not implemented
     * Tested on SQL Server only. Tests on other databases pending 
+    * CommandType.Text may works incorrectly
 
 ### Future implementations
 --------------------------
