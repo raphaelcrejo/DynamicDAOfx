@@ -1,5 +1,7 @@
 # DynamicDAO
-### _Providing an easy way to access databases and fill objects_
+## _Providing an easy way to access databases and fill objects_
+
+**Note:** This repository contains the **.NET Framework** implementation of the library. For the **.NET6** implementation, [click here][N6]
 
 ### About
 ---------
@@ -148,4 +150,5 @@ This library will stay Release Candidate 1 due by the following reasons:
 **This software is free, and I like it!**
 
 [//]: #
+[N6]: <https://github.com/raphaelcrejo/DynamicDAO6>
 [Lic]: <https://github.com/raphaelcrejo/DynamicDAO/blob/main/LICENSE>
