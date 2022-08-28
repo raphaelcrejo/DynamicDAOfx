@@ -1,20 +1,20 @@
-# DynamicDAO
-## _Providing an easy way to access databases and fill objects_
+# DynamicDAO - _Providing an easy way to access databases and fill objects_
+
+
+[![license](https://img.shields.io/badge/license-MIT-brightgreen)](https://github.com/raphaelcrejo/DynamicDAO/blob/main/LICENSE) ![msbuild](https://github.com/raphaelcrejo/DynamicDAO/actions/workflows/msbuild.yml/badge.svg) [![Donate](https://img.shields.io/badge/Donate-PayPal-informational.svg)](https://www.paypal.com/donate/?hosted_button_id=544HTWNBJUUPG)
 
 **Note:** This repository contains the **.NET Framework** implementation of the library. For the **.NET6** implementation, [click here][N6]
 
-### About
----------
+## About
 DynamicDAO is a .NET MicroORM that allows you to access and work with your database within minimal efforts.
 
-### Features
+## Features
 - Creates an `IDBConnection` based on pre-defined information (Database provider, connection string, parameter identifier and database command type)
 - Execute methods based on mapped objects or manually entered parameters 
 - Queries are executed and returning data are converted to object automatically
 
-### A little code
------------------
-Setting up your provider information:
+## A little code
+### Setting up your provider information
 
 ```csharp
 ProviderInfo provider = new ProviderInfo("System.Data.SqlClient", "Data Source=.\SQLEXPRESS;Initial Catalog=tempdb;User ID=sa;Password=adm")
@@ -23,7 +23,7 @@ ProviderInfo provider = new ProviderInfo("System.Data.SqlClient", "Data Source=.
 // - commandType = CommandType.StoredProcedure
 ```
 
-Creating a data access object:
+### Creating a data access object
 
 ```csharp
 using DynamicDAO;
@@ -34,7 +34,9 @@ using (AutoDAO db = new AutoDAO(provider))
 }
 ```
 
-Adding manual parameters to the data access object (considers the following procedure):
+### Adding manual parameters to the data access object
+
+Considers the following procedure:
 
 ```sql
 -- @PERSON_NAME VARCHAR(100)
@@ -61,7 +63,9 @@ using (AutoDAO db = new AutoDAO(provider))
 }
 ```
 
-Adding mapped object to data access object (considers the following class):
+### Adding mapped object to data access object
+
+Considers the following class:
 
 ```csharp
 using System.Data;
@@ -101,7 +105,7 @@ using (AutoDAO db = new AutoDAO(provider))
 }
 ```
 
-`ExecuteScalar` and `ExecuteNonQuery` methods:
+### `ExecuteScalar` and `ExecuteNonQuery` methods
 
 ```csharp
 object result = db.ExecuteScalar("INSERT_PERSON"); // considering that your stored procedure returns the Person ID
@@ -112,7 +116,9 @@ int result = db.ExecuteNonQuery("INSERT_PERSON");
 db.ExecuteNonQuery("INSERT_PERSON");
 ```
 
-`Query<T>` and `QueryList<T>` methods (considers the `Person` class above):
+### `Query<T>` and `QueryList<T>` methods
+
+Considers the `Person` class above:
 
 ```csharp
 Person person = db.Query<Person>("SELECT_PERSON");
@@ -122,15 +128,14 @@ Person person = db.Query<Person>("SELECT_PERSON");
 List<Person> personList = db.QueryList<Person>("SELECT_PERSONS");
 ```
 
-Removing parameters:
+### Removing parameters
 
 ```csharp
 db.ClearParameters(); // remove all parameters from IDBCommand
 db.RemoveParameters(new string[] { "PERSON_DOB" }); // remove specific parameter from IDBCommand
 ```
 
-### Version info
-----------------
+## Version info
 * 1.0.0-rc1
 This library will stay Release Candidate 1 due by the following reasons:
     * `AddOutputParameter` are not tested
@@ -138,16 +143,11 @@ This library will stay Release Candidate 1 due by the following reasons:
     * Tested on SQL Server only. Tests on other databases pending 
     * CommandType.Text may works incorrectly
 
-### Future implementations
---------------------------
+## Future implementations
 * Add an `IDBTransaction` to manage transactions
 * Create an agnostic BulkCopy method, for mass-insert operations
-
-### License
------------
-[MIT][Lic]
-
-**This software is free, and I like it!**
+* Replace array with `IEnumerable` or `IDictionary` objects 
+* Improve CommandType.Text functionality
 
 [//]: #
 [N6]: <https://github.com/raphaelcrejo/DynamicDAO6>
