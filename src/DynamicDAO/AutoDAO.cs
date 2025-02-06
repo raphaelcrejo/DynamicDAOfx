@@ -10,12 +10,62 @@ namespace DynamicDAO
     /// </summary>
     public class AutoDAO : IDisposable
     {
-        private readonly IDbConnection _connection;
+        internal bool disposed = false;
+
+        private enum TransactionBehaviour
+        {
+            CommitTransaction = 1,
+            RollbackTransaction = 2
+        }
+
+        private IDbConnection _connection;
         private IDbCommand _command;
+        private IDbTransaction _transaction = null;
 
         private string _identifier = string.Empty;
 
-        internal bool disposed = false;
+        /// <summary>
+        /// Realiza o commit ou rollback de uma transação.
+        /// </summary>
+        /// <param name="transactionBehaviour">Ação a ser realizada pela transação.</param>
+
+        private void ManageTransaction(TransactionBehaviour transactionBehaviour)
+        {
+            if (_transaction != null)
+            {
+                switch (transactionBehaviour)
+                {
+                    case TransactionBehaviour.CommitTransaction:
+                        _transaction.Commit();
+                        break;
+                    case TransactionBehaviour.RollbackTransaction:
+                        _transaction.Rollback();
+                        break;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Inicializa uma nova instância da classe <see cref="AutoDAO"/> com propriedades padrão.
+        /// </summary>
+        /// <param name="connectionString">String de conexão com o banco de dados.</param>
+        public AutoDAO(string connectionString)
+        {
+            ProviderInfo providerInfo = new ProviderInfo
+            {
+                ConnectionString = connectionString
+            };
+
+            _identifier = providerInfo.Identifier;
+
+            _connection = Core.DataObjects.CreateConnection(providerInfo);
+            _command = Core.DataObjects.CreateCommand(_connection, providerInfo);
+
+            if (providerInfo.LockTransaction == true)
+            {
+                _transaction = Core.DataObjects.CreateTransaction(_connection, providerInfo);
+            }
+        }
 
         /// <summary>
         /// Inicializa uma nova instância da classe <see cref="AutoDAO"/> com propriedades padrão.
@@ -27,6 +77,11 @@ namespace DynamicDAO
 
             _connection = Core.DataObjects.CreateConnection(providerInfo);
             _command = Core.DataObjects.CreateCommand(_connection, providerInfo);
+
+            if (providerInfo.LockTransaction == true)
+            {
+                _transaction = Core.DataObjects.CreateTransaction(_connection, providerInfo);
+            }
         }
 
         /// <summary>
@@ -131,10 +186,13 @@ namespace DynamicDAO
         {
             try
             {
-                return Core.Engine.ExecuteNonQuery(_connection, _command, storedProcedure);
+                int result = Core.Engine.ExecuteNonQuery(ref _connection, ref _command, ref _transaction, storedProcedure);
+                ManageTransaction(TransactionBehaviour.CommitTransaction);
+                return result;
             }
             catch
             {
+                ManageTransaction(TransactionBehaviour.RollbackTransaction);
                 throw;
             }
         }
@@ -148,10 +206,13 @@ namespace DynamicDAO
         {
             try
             {
-                return Core.Engine.ExecuteScalar(_connection, _command, storedProcedure);
+                object result = Core.Engine.ExecuteScalar(ref _connection, ref _command, ref _transaction, storedProcedure);
+                ManageTransaction(TransactionBehaviour.CommitTransaction);
+                return result;
             }
             catch
             {
+                ManageTransaction(TransactionBehaviour.RollbackTransaction);
                 throw;
             }
         }
@@ -166,10 +227,13 @@ namespace DynamicDAO
         {
             try
             {
-                return Core.Engine.GetEntity<T>(_connection, _command, storedProcedure);
+                T result = Core.Engine.GetEntity<T>(ref _connection, ref _command, ref _transaction, storedProcedure);
+                ManageTransaction(TransactionBehaviour.CommitTransaction);
+                return result;
             }
             catch
             {
+                ManageTransaction(TransactionBehaviour.RollbackTransaction);
                 throw;
             }
         }
@@ -184,10 +248,13 @@ namespace DynamicDAO
         {
             try
             {
-                return Core.Engine.GetEntityList<T>(_connection, _command, storedProcedure);
+                List<T> result = Core.Engine.GetEntityList<T>(ref _connection, ref _command, ref _transaction, storedProcedure);
+                ManageTransaction(TransactionBehaviour.CommitTransaction);
+                return result;
             }
             catch
             {
+                ManageTransaction(TransactionBehaviour.RollbackTransaction);
                 throw;
             }
         }
@@ -215,6 +282,7 @@ namespace DynamicDAO
                 {
                     if (_connection.State == ConnectionState.Open)
                     {
+                        _transaction?.Dispose();
                         _connection.Close();
                     }
 

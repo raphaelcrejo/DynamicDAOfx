@@ -33,8 +33,22 @@ namespace DynamicDAO.Core
         {
             IDbCommand command = connection.CreateCommand();
             command.CommandType = providerInfo.CommandType;
+            command.CommandTimeout = providerInfo.CommandTimeout;
 
             return command;
+        }
+
+        /// <summary>
+        /// Cria uma transação para execução de instrução SQL em uma fonte de dados.
+        /// </summary>
+        /// <param name="connection"></param>
+        /// <param name="providerInfo">Informações do provedor de dados.</param>
+        /// <returns>Um <see cref="IDbTransaction"/> associado ao <see cref="IDbConnection"/> informado.</returns>
+        internal static IDbTransaction CreateTransaction(IDbConnection connection, ProviderInfo providerInfo)
+        {
+            IDbTransaction transaction = connection.BeginTransaction(providerInfo.IsolationLevel);
+
+            return transaction;
         }
     }
 }

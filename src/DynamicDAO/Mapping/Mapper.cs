@@ -24,7 +24,7 @@ namespace DynamicDAO.Mapping
         {
             Dictionary<string, object[]> dicParameters = new Dictionary<string, object[]>();
 
-            foreach (PropertyInfo pInfo in typeof(T).GetProperties())
+            foreach (PropertyInfo pInfo in typeof(T).GetProperties(BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance))
             {
                 object[] attribute = pInfo.GetCustomAttributes(typeof(ParameterAttribute), true);
                 object[] parameterData = new object[2];
@@ -54,7 +54,7 @@ namespace DynamicDAO.Mapping
         {
             Dictionary<string, string> dicFields = new Dictionary<string, string>();
 
-            foreach (PropertyInfo pInfo in typeof(T).GetProperties())
+            foreach (PropertyInfo pInfo in typeof(T).GetProperties(BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance))
             {
                 object[] attribute = pInfo.GetCustomAttributes(typeof(FieldAttribute), true);
 
