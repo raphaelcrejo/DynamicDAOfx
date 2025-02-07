@@ -1,9 +1,9 @@
 # DynamicDAO - _Providing an easy way to access databases and fill objects_
 
 
-[![license](https://img.shields.io/badge/license-MIT-brightgreen)](https://github.com/raphaelcrejo/DynamicDAO/blob/main/LICENSE) [![MSBuild](https://github.com/raphaelcrejo/DynamicDAOfx/actions/workflows/msbuild.yml/badge.svg)](https://github.com/raphaelcrejo/DynamicDAOfx/actions/workflows/msbuild.yml) [![Donate](https://img.shields.io/badge/Donate-PayPal-informational.svg)](https://www.paypal.com/donate/?hosted_button_id=544HTWNBJUUPG)
+[![license](https://img.shields.io/badge/license-MIT-brightgreen)](https://github.com/raphaelcrejo/DynamicDAOfx/blob/main/LICENSE) [![MSBuild](https://github.com/raphaelcrejo/DynamicDAOfx/actions/workflows/msbuild.yml/badge.svg)](https://github.com/raphaelcrejo/DynamicDAOfx/actions/workflows/msbuild.yml) [![Donate](https://img.shields.io/badge/Donate-PayPal-informational.svg)](https://www.paypal.com/donate/?hosted_button_id=544HTWNBJUUPG)
 
-**Note:** This repository contains the **.NET Framework** implementation of the library. For the **.NET Standard 2.1** implementation, [click here][N6]
+**Note:** This repository contains the **.NET Framework** implementation of the library. For the **.NET Standard 2.1** implementation, [click here][NStd21]
 
 ## About
 DynamicDAO is a .NET MicroORM that allows you to access and work with your database within minimal efforts.
@@ -150,5 +150,5 @@ db.RemoveParameters(new string[] { "PERSON_DOB" }); // remove specific parameter
 ```
 
 [//]: #
-[N6]: <https://github.com/raphaelcrejo/DynamicDAO>
+[NStd21]: <https://github.com/raphaelcrejo/DynamicDAO>
 [Lic]: <https://github.com/raphaelcrejo/DynamicDAOfx/blob/main/LICENSE>
