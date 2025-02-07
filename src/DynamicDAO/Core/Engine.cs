@@ -220,6 +220,7 @@ namespace DynamicDAO.Core
         /// </summary>
         /// <param name="connection">Conexão com a fonte de dados</param>
         /// <param name="command">Instrução SQL a ser executada.</param>
+        /// <param name="transaction">Transação associada ao comando.</param>
         /// <param name="storedProcedure">Query/Stored procedure a ser executada.</param>
         /// <returns>O número de linhas afetadas.</returns>
         /// <exception cref="InvalidOperationException">InvalidOperationException</exception>
@@ -255,6 +256,7 @@ namespace DynamicDAO.Core
         /// </summary>
         /// <param name="connection">Conexão com a fonte de dados</param>
         /// <param name="command">Instrução SQL a ser executada.</param>
+        /// <param name="transaction">Transação associada ao comando.</param>
         /// <param name="storedProcedure">Query/Stored procedure a ser executada.</param>
         /// <returns>A primeira linha da primeira coluna do conjunto de resultados.</returns>
         internal static object ExecuteScalar(ref IDbConnection connection, ref IDbCommand command, ref IDbTransaction transaction, string storedProcedure)
@@ -290,6 +292,7 @@ namespace DynamicDAO.Core
         /// <typeparam name="T">Tipo de objeto a ser preenchido.</typeparam>
         /// <param name="connection">Conexão com a fonte de dados</param>
         /// <param name="command">Instrução SQL a ser executada.</param>
+        /// <param name="transaction">Transação associada ao comando.</param>
         /// <param name="storedProcedure">Query/Stored procedure a ser executada.</param>
         /// <returns>Um objeto <typeparamref name="T"/> preenchido.</returns>
         internal static T GetEntity<T>(ref IDbConnection connection, ref IDbCommand command, ref IDbTransaction transaction, string storedProcedure) where T : new()
@@ -335,6 +338,7 @@ namespace DynamicDAO.Core
         /// <typeparam name="T">Tipo de objetos na lista.</typeparam>
         /// <param name="connection">Conexão com a fonte de dados</param>
         /// <param name="command">Instrução SQL a ser executada.</param>
+        /// <param name="transaction">Transação associada ao comando.</param>
         /// <param name="storedProcedure">Query/Stored procedure a ser executada.</param>
         /// <returns>Uma lista de <typeparamref name="T"/> preenchidos.</returns>
         internal static List<T> GetEntityList<T>(ref IDbConnection connection, ref IDbCommand command, ref IDbTransaction transaction, string storedProcedure) where T : new()
