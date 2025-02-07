@@ -1,7 +1,7 @@
 # DynamicDAO - _Providing an easy way to access databases and fill objects_
 
 
-[![license](https://img.shields.io/badge/license-MIT-brightgreen)](https://github.com/raphaelcrejo/DynamicDAO/blob/main/LICENSE) ![msbuild](https://github.com/raphaelcrejo/DynamicDAO/actions/workflows/msbuild.yml/badge.svg) [![Donate](https://img.shields.io/badge/Donate-PayPal-informational.svg)](https://www.paypal.com/donate/?hosted_button_id=544HTWNBJUUPG)
+[![license](https://img.shields.io/badge/license-MIT-brightgreen)](https://github.com/raphaelcrejo/DynamicDAO/blob/main/LICENSE) [![MSBuild](https://github.com/raphaelcrejo/DynamicDAOfx/actions/workflows/msbuild.yml/badge.svg)](https://github.com/raphaelcrejo/DynamicDAOfx/actions/workflows/msbuild.yml) [![Donate](https://img.shields.io/badge/Donate-PayPal-informational.svg)](https://www.paypal.com/donate/?hosted_button_id=544HTWNBJUUPG)
 
 **Note:** This repository contains the **.NET Framework** implementation of the library. For the **.NET6** implementation, [click here][N6]
 
@@ -17,10 +17,14 @@ DynamicDAO is a .NET MicroORM that allows you to access and work with your datab
 ### Setting up your provider information
 
 ```csharp
-ProviderInfo provider = new ProviderInfo("System.Data.SqlClient", "Data Source=.\SQLEXPRESS;Initial Catalog=tempdb;User ID=sa;Password=adm")
+ProviderInfo provider = new ProviderInfo("Data Source=.\SQLEXPRESS;Initial Catalog=tempdb;User ID=sa;Password=adm")
 // Defaut parameters: 
+// - providerName: System.Data.SqlClient
 // - identifier  = @
 // - commandType = CommandType.StoredProcedure
+// - commandTimeout = 30sec
+// - lockTransaction = false
+// - isolationLevel = IsolationLevel.ReadCommited (works only when lockTransaction is true)
 ```
 
 ### Creating a data access object
@@ -29,6 +33,16 @@ ProviderInfo provider = new ProviderInfo("System.Data.SqlClient", "Data Source=.
 using DynamicDAO;
 ...
 using (AutoDAO db = new AutoDAO(provider))
+{
+    // Your code here
+}
+```
+or
+```csharp
+using DynamicDAO;
+...
+// Assumes default settings, like ProviderInfo
+using (AutoDAO db = new AutoDAO("Data Source=.\SQLEXPRESS;Initial Catalog=tempdb;User ID=sa;Password=adm"))
 {
     // Your code here
 }
@@ -54,9 +68,9 @@ using (AutoDAO db = new AutoDAO(provider))
 {
     objetc[][] inputParameters = new object[3][];
 
-    inputParameters[0] = new object { "NAME", "Raphael Crejo" };
-    inputParameters[1] = new object { "AGE", 37 };
-    inputParameters[2] = new object { "DOB", new DateTime(1985, 3, 15) };
+    inputParameters[0] = new object[] { "NAME", "Raphael Crejo" };
+    inputParameters[1] = new object[] { "AGE", 37 };
+    inputParameters[2] = new object[] { "DOB", new DateTime(1985, 3, 15) };
     
     db.AddInputParameters(inputParameters);
     // Your code here
@@ -94,7 +108,7 @@ public class Person
 Person person = new Person
 {
     Name = "Raphael da Cunha Crejo",
-    Age = 37,
+    Age = 39,
     DOB = new DateTime(1985, 3, 15)
 };
 
@@ -135,20 +149,6 @@ db.ClearParameters(); // remove all parameters from IDBCommand
 db.RemoveParameters(new string[] { "PERSON_DOB" }); // remove specific parameter from IDBCommand
 ```
 
-## Version info
-* 1.0.0-rc1
-This library will stay Release Candidate 1 due by the following reasons:
-    * `AddOutputParameter` are not tested
-    * `IDBTransaction` are not implemented
-    * Tested on SQL Server only. Tests on other databases pending 
-    * CommandType.Text may works incorrectly
-
-## Future implementations
-* Add an `IDBTransaction` to manage transactions
-* Create an agnostic BulkCopy method, for mass-insert operations
-* Replace array with `IEnumerable` or `IDictionary` objects 
-* Improve CommandType.Text functionality
-
 [//]: #
-[N6]: <https://github.com/raphaelcrejo/DynamicDAO6>
-[Lic]: <https://github.com/raphaelcrejo/DynamicDAO/blob/main/LICENSE>
+[N6]: <https://github.com/raphaelcrejo/DynamicDAO>
+[Lic]: <https://github.com/raphaelcrejo/DynamicDAOfx/blob/main/LICENSE>
