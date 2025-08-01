@@ -40,6 +40,11 @@ namespace DynamicDAO.Core
             {
                 colName = reader.GetName(i);
 
+                if (dicFields.ContainsKey(colName) == false)
+                {
+                    continue;
+                }
+
                 PropertyInfo pInfo = t.GetProperty(dicFields[colName], BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
 
                 if (pInfo != null)
