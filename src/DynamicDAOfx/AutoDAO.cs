@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Reflection;
 
-namespace DynamicDAO
+namespace DynamicDAOfx
 {
     /// <summary>
     /// Realiza a conexão à uma fonte de dados, define uma instrução SQL, adiciona e remove parâmetros de entrada, e devolve objetos preenchidos.

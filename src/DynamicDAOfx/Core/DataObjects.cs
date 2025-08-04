@@ -1,7 +1,7 @@
 ﻿using System.Data;
 using System.Data.Common;
 
-namespace DynamicDAO.Core
+namespace DynamicDAOfx.Core
 {
     /// <summary>
     /// Define a conexão e a instrução SQL para acesso À uma fonte de dados.

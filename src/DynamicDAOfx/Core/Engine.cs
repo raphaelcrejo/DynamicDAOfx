@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Reflection;
 
-namespace DynamicDAO.Core
+namespace DynamicDAOfx.Core
 {
     /// <summary>
     /// Define os métodos adição e remoção de parâmetros, execução de comandos em uma conexão à uma fonte de dados e devolução de objetos preenchidos.

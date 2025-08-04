@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Data;
 
-namespace DynamicDAO
+namespace DynamicDAOfx
 {
     /// <summary>
     /// Define os dados de provedor e string de conexão para acesso à uma fonte de dados.
