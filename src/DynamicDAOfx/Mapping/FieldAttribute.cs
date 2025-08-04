@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DynamicDAO.Mapping
+namespace DynamicDAOfx.Mapping
 {
     /// <summary>
     /// Marca os elementos utilizados como receptores de dados das queries e/ou stored procedures. Essa classe não pode ser herdada.

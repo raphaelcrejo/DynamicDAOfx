@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Data;
 
-namespace DynamicDAO.Mapping
+namespace DynamicDAOfx.Mapping
 {
     /// <summary>
     /// Marca os elementos utilizados como parâmetros nas queries e/ou stored procedures. Essa classe não pode ser herdada.

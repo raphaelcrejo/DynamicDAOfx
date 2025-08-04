@@ -2,7 +2,7 @@
 using System.Data;
 using System.Reflection;
 
-namespace DynamicDAO.Mapping
+namespace DynamicDAOfx.Mapping
 {
     /// <summary>
     /// Realiza o mapeamento entre a entidade, POCO ou DTO, para execução de queries e/ou stored procedures.
